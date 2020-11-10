@@ -7,7 +7,7 @@ let currentChannel = await loadCurrentChannel()
 let widget = await createWidget(currentChannel)
 Script.setWidget(widget)
 Script.complete()
-//widget.presentSmall()
+widget.presentSmall()
 
 async function loadCurrentChannel() {
     let url = schema + "://" + openWebIfUser + ":" + openWebIfPassword + "@" + openWebIfUrl + "/api/getcurrent"
