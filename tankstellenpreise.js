@@ -1,22 +1,34 @@
-// Version 1.0.2
+// Version 1.0.4
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 
 let apiKey = 'YOUR-API-KEY' // get API-Key from https://creativecommons.tankerkoenig.de/
 let radius = 1 // radius in km, set it higher if the script throws an error, it's possible that there is no gas station near your location
+let fixedLocation = false // set to true if you want a fixed location
+
+// geocooridantes of location from a gas station, get it via google maps or other tools. Don't forget the comma at the end of line 11
+const myLocation = {
+    latitude: 48.449,
+    longitude: 9.139
+}
 
 const apiURL = (location, radius, apiKey) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=${radius}&sort=dist&type=all&apikey=${apiKey}`
 
-let station = await loadStation(apiKey)
-let widget = await createWidget(station, radius)
+let station = await loadStation(apiKey, radius, fixedLocation)
+let widget = await createWidget(station)
 if (!config.runsInWidget) {
     await widget.presentSmall()
 }
 Script.setWidget(widget)
 Script.complete()
 
-async function loadStation(apiKey, radius) {
-    let location = await Location.current()    
+async function loadStation(apiKey, radius, fixedLocation) {
+    let location
+    if (fixedLocation) {
+        location = myLocation
+    } else {
+        location = await Location.current()    
+    }
 
     const data = await new Request(apiURL(location, radius, apiKey)).loadJSON()
     
