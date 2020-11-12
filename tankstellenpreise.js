@@ -1,4 +1,4 @@
-// Version 1.0
+// Version 1.0.1
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 
@@ -32,15 +32,13 @@ async function createWidget(data) {
     const list = new ListWidget()
     list.setPadding(0, 4, 1, 4)
     
-    if (Device.isUsingDarkAppearance()) {
-        const gradient = new LinearGradient()
-        gradient.locations = [0, 1]
-        gradient.colors = [
-            new Color("111111"),
-            new Color("222222")
-        ]
-        list.backgroundGradient = gradient
-    }
+    const gradient = new LinearGradient()
+    gradient.locations = [0, 1]
+    gradient.colors = [
+        new Color("111111"),
+        new Color("222222")
+    ]
+    list.backgroundGradient = gradient    
 
     let open = '🔴'
     if (attr.isOpen) {
@@ -91,7 +89,7 @@ async function createWidget(data) {
     list.addSpacer(5)
     let address = list.addText('Adresse:')
     address.font = Font.boldSystemFont(12)
-    const station = list.addText(attr.street)
+    let station = list.addText(attr.street)
     station.font = Font.lightSystemFont(12)
     
     return list
