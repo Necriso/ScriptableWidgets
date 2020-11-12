@@ -24,6 +24,7 @@ Script.complete()
 
 async function loadStation(apiKey, radius, fixedLocation) {
     let location
+    
     if (fixedLocation) {
         location = myLocation
     } else {
