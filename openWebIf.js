@@ -1,14 +1,16 @@
+// Version 1.0.0
+// Check www.scriptables.net for more widgets
+// Use www.scriptdu.de to keep the widget up-to-date
+
 let schema = 'http'
 let openWebIfUser = 'root'
-let openWebIfPassword = 'ma5ter81'
-let openWebIfUrl = '192.168.178.33/api'
+let openWebIfPassword = 'YOUR-PASSWORD'
+let openWebIfUrl = 'YOUR.IP/api'
 
 let currentChannel = await loadCurrentChannel()
-console.log(currentChannel)
 let widget = await createWidget(currentChannel)
 Script.setWidget(widget)
 Script.complete()
-
 
 async function loadCurrentChannel() {
     let url = schema + "://" + openWebIfUser + ":" + openWebIfPassword + "@" + openWebIfUrl + "/getcurrent"
@@ -16,11 +18,9 @@ async function loadCurrentChannel() {
     req.allowInsecureRequest = true
     try {
       let json = await req.loadJSON()
-      console.log(json)
       return json
     } catch(e) {
         return 'Keine Verbindung zum Server'
-      //throw new Error('Keine Verbindung zum Server')
     }
 }
 
@@ -30,8 +30,8 @@ function getTime(timestamp) {
 }
 
 async function createWidget(channel) {
-    let widget = new ListWidget()
-    widget.setPadding(5, 0, 0, 5)
+  let widget = new ListWidget()
+  widget.setPadding(5, 0, 0, 5)
   // set gradient background
   let startColor = new Color("#000")
   let endColor = new Color("#111")
