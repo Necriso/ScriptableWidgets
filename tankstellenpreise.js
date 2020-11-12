@@ -1,22 +1,24 @@
-// Version 1.0.1
+// Version 1.0.2
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 
 let apiKey = 'YOUR-API-KEY' // get API-Key from https://creativecommons.tankerkoenig.de/
+let radius = 1 // radius in km, set it higher if the script throws an error, it's possible that there is no gas station near your location
 
-const apiURL = (location, apiKey) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=1&sort=dist&type=all&apikey=${apiKey}`
+const apiURL = (location, radius, apiKey) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=${radius}&sort=dist&type=all&apikey=${apiKey}`
 
 let station = await loadStation(apiKey)
-let widget = await createWidget(station)
+let widget = await createWidget(station, radius)
 if (!config.runsInWidget) {
     await widget.presentSmall()
 }
 Script.setWidget(widget)
 Script.complete()
 
-async function loadStation(apiKey) {
-    let location = await Location.current()
-    const data = await new Request(apiURL(location, apiKey)).loadJSON()
+async function loadStation(apiKey, radius) {
+    let location = await Location.current()    
+
+    const data = await new Request(apiURL(location, radius, apiKey)).loadJSON()
     
     if (!data) {
         const errorList = new ListWidget()
