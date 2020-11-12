@@ -1,6 +1,6 @@
 let schema = 'http'
 let openWebIfUser = 'root'
-let openWebIfPassword = 'ma5ter81'
+let openWebIfPassword = 'password'
 let openWebIfUrl = '192.168.178.33/api'
 
 let currentChannel = await loadCurrentChannel()
