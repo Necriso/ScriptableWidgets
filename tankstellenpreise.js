@@ -1,4 +1,4 @@
-// Version 1.0.2
+// Version 1.0.3
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 
@@ -7,8 +7,8 @@ let radius = 1 // radius in km, set it higher if the script throws an error, it'
 
 const apiURL = (location, radius, apiKey) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=${radius}&sort=dist&type=all&apikey=${apiKey}`
 
-let station = await loadStation(apiKey)
-let widget = await createWidget(station, radius)
+let station = await loadStation(apiKey, radius)
+let widget = await createWidget(station)
 if (!config.runsInWidget) {
     await widget.presentSmall()
 }
