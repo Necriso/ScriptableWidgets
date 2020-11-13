@@ -1,4 +1,4 @@
-// Version 2.0.0
+// Version 2.0.1b
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 
@@ -129,6 +129,12 @@ let config = await loadConfig()
     return data
 }
 
+function formatValue(value) {
+    let lastDigit = '⁹'
+    let price = value.toString().slice(0, -1)
+    return price + lastDigit + "€"
+}
+
 async function createWidget(data) {
     const attr = data.stations[0]
     
@@ -166,8 +172,8 @@ async function createWidget(data) {
     dieselLabel.font = Font.boldSystemFont(12)
     
     dieselStack.addSpacer()    
-    let dieselPrice = dieselStack.addText(attr.diesel + "€")
-    dieselPrice.font = Font.mediumSystemFont(12)
+    let dieselPrice = dieselStack.addText(formatValue(attr.diesel))
+    dieselPrice.font = new Font('Menlo', 12)
 
     list.addSpacer(1)
 
@@ -176,8 +182,8 @@ async function createWidget(data) {
     e5Label.font = Font.boldSystemFont(12)
     
     e5Stack.addSpacer()
-    let e5Price = e5Stack.addText(attr.e5 + "€")
-    e5Price.font = Font.mediumSystemFont(12)
+    let e5Price = e5Stack.addText(formatValue(attr.e5))
+    e5Price.font = new Font('Menlo', 12)
 
     list.addSpacer(1)
 
@@ -186,8 +192,8 @@ async function createWidget(data) {
     e10Label.font = Font.boldSystemFont(12)
     
     e10Stack.addSpacer()
-    let e10Price = e10Stack.addText(attr.e10 + "€")
-    e10Price.font = Font.mediumSystemFont(12)
+    let e10Price = e10Stack.addText(formatValue(attr.e10))
+    e10Price.font = new Font('Menlo', 12)
     
     list.addSpacer(5)
     let address = list.addText('Adresse:')

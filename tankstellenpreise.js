@@ -95,7 +95,7 @@ async function createWidget(data) {
     
     e5Stack.addSpacer()
     let e5Price = e5Stack.addText(formatValue(attr.e5))
-    e5Price.font = new Font('Menlo', 12);
+    e5Price.font = new Font('Menlo', 12)
 
     list.addSpacer(1)
 
