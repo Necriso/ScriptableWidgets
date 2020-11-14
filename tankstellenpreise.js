@@ -1,4 +1,4 @@
-// Version 1.0.5
+// Version 1.0.6
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 
@@ -82,36 +82,44 @@ async function createWidget(data) {
     let dieselStack = list.addStack()    
     let dieselLabel = dieselStack.addText("Diesel:")
     dieselLabel.font = Font.boldSystemFont(12)
+    dieselLabel.textColor = Color.white()
     
     dieselStack.addSpacer()    
     let dieselPrice = dieselStack.addText(formatValue(attr.diesel))
     dieselPrice.font = new Font('Menlo', 12)
+    dieselPrice.textColor = Color.white()
 
     list.addSpacer(1)
 
     let e5Stack = list.addStack()
     let e5Label = e5Stack.addText("Benzin E5:")
     e5Label.font = Font.boldSystemFont(12)
+    e5Label.textColor = Color.white()
     
     e5Stack.addSpacer()
     let e5Price = e5Stack.addText(formatValue(attr.e5))
     e5Price.font = new Font('Menlo', 12)
+    e5Price.textColor = Color.white()
 
     list.addSpacer(1)
 
     let e10Stack = list.addStack()
     let e10Label = e10Stack.addText("Benzin E10:")
     e10Label.font = Font.boldSystemFont(12)
+    e10Label.textColor = Color.white()
     
     e10Stack.addSpacer()
     let e10Price = e10Stack.addText(formatValue(attr.e10))
     e10Price.font = new Font('Menlo', 12)
+    e10Price.textColor = Color.white()
     
     list.addSpacer(5)
     let address = list.addText('Adresse:')
     address.font = Font.boldSystemFont(12)
+    address.textColor = Color.white()
     let station = list.addText(attr.street)
     station.font = Font.lightSystemFont(12)
+    station.textColor = Color.white()
     
     return list
 }
