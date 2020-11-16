@@ -17,7 +17,7 @@ Get more widgets at www.scriptables.net
 
 Configure the widget via widget parameters.
 
-On Homescreen, long tap -> edit widget -> Parameter
+On Homescreen, long tap n widget -> edit widget -> Parameter
 
 Add your credentials as follow:
 `API-Key|Radius|fixedLocation (0 or 1)`
