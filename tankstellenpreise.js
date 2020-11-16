@@ -1,4 +1,4 @@
-// Version 1.1.1
+// Version 1.1.2
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 // Usage:
@@ -154,9 +154,16 @@ async function createWidget(data) {
   let address = list.addText('Adresse:')
   address.font = Font.boldSystemFont(12)
   address.textColor = whiteColor
-  let station = list.addText(attr.street)
+
+  let addressStack = list.addStack()
+
+  let station = addressStack.addText(attr.street)
   station.font = Font.lightSystemFont(12)
   station.textColor = whiteColor
+
+  let houseNumber = addressStack.addText(" " + attr.houseNumber)
+  houseNumber.font = Font.lightSystemFont(12)
+  houseNumber.textColor = whiteColor
 
   return list
 }
