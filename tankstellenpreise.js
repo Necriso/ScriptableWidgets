@@ -1,4 +1,4 @@
-// Version 1.1.2
+// Version 1.1.3
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 // Usage:
@@ -40,7 +40,10 @@ if (widgetInput !== null) {
   throw new Error("No Widget paramter set. Expected format: apiKey|radius (1-20)|fixedLocation (0 or 1)")
 }
 
-const whiteColor = Color.white()
+const backColor = Color.dynamic(new Color('FFFFFF'), new Color('111111'));
+const backColor2 = Color.dynamic(new Color('EEEEEE'), new Color('222222'));
+const textColor = Color.dynamic(new Color('000000'), new Color('EDEDED'));
+
 const apiURL = (location, radius, apiKey) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=${radius}&sort=dist&type=all&apikey=${apiKey}`
 
 let station = await loadStation(apiKey, radius, fixedLocation, myLocation)
@@ -84,15 +87,15 @@ async function createWidget(data) {
   const gradient = new LinearGradient()
   gradient.locations = [0, 1]
   gradient.colors = [
-    new Color("111111"),
-    new Color("222222")
+    backColor,
+    backColor2
   ]
   list.backgroundGradient = gradient
 
   if (data.error) {
     let errorMessage = list.addText('No station in selected radius found. Please set a greater radius in widget parameters')
     errorMessage.font = Font.boldSystemFont(12)
-    errorMessage.textColor = whiteColor
+    errorMessage.textColor = textColor
     return list
   }
 
@@ -107,7 +110,7 @@ async function createWidget(data) {
 
   let stationName = firstLineStack.addText(attr.brand)
   stationName.font = Font.boldSystemFont(15)
-  stationName.textColor = whiteColor
+  stationName.textColor = textColor
 
   firstLineStack.addSpacer()
   let stationOpen = firstLineStack.addText(open)
@@ -119,51 +122,51 @@ async function createWidget(data) {
   let dieselStack = list.addStack()
   let dieselLabel = dieselStack.addText("Diesel:")
   dieselLabel.font = Font.boldSystemFont(12)
-  dieselLabel.textColor = whiteColor
+  dieselLabel.textColor = textColor
 
   dieselStack.addSpacer()
   let dieselPrice = dieselStack.addText(formatValue(attr.diesel))
   dieselPrice.font = new Font('Menlo', 12)
-  dieselPrice.textColor = whiteColor
+  dieselPrice.textColor = textColor
 
   list.addSpacer(1)
 
   let e5Stack = list.addStack()
   let e5Label = e5Stack.addText("Benzin E5:")
   e5Label.font = Font.boldSystemFont(12)
-  e5Label.textColor = whiteColor
+  e5Label.textColor = textColor
 
   e5Stack.addSpacer()
   let e5Price = e5Stack.addText(formatValue(attr.e5))
   e5Price.font = new Font('Menlo', 12)
-  e5Price.textColor = whiteColor
+  e5Price.textColor = textColor
 
   list.addSpacer(1)
 
   let e10Stack = list.addStack()
   let e10Label = e10Stack.addText("Benzin E10:")
   e10Label.font = Font.boldSystemFont(12)
-  e10Label.textColor = whiteColor
+  e10Label.textColor = textColor
 
   e10Stack.addSpacer()
   let e10Price = e10Stack.addText(formatValue(attr.e10))
   e10Price.font = new Font('Menlo', 12)
-  e10Price.textColor = whiteColor
+  e10Price.textColor = textColor
 
   list.addSpacer(5)
   let address = list.addText('Adresse:')
   address.font = Font.boldSystemFont(12)
-  address.textColor = whiteColor
+  address.textColor = textColor
 
   let addressStack = list.addStack()
 
   let station = addressStack.addText(attr.street)
   station.font = Font.lightSystemFont(12)
-  station.textColor = whiteColor
+  station.textColor = textColor
 
   let houseNumber = addressStack.addText(" " + attr.houseNumber)
   houseNumber.font = Font.lightSystemFont(12)
-  houseNumber.textColor = whiteColor
+  houseNumber.textColor = textColor
 
   return list
 }
