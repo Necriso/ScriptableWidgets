@@ -19,7 +19,6 @@ if (widgetInput !== null) {
 } else {
     throw new Error("No Widget paramter set. Expected format: fuelType (DIE, SUP, GAS)")
 }
-fuelType = 'DIE'
 
 const backColor = Color.dynamic(new Color('FFFFFF'), new Color('111111'));
 const backColor2 = Color.dynamic(new Color('EEEEEE'), new Color('222222'));
