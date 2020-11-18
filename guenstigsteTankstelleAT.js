@@ -3,9 +3,8 @@
 // Use www.scriptdu.de to keep the widget up-to-date
 // Usage:
 // Add credentials toyour widget parameters: 
-// API-Key|radius in km|oilType (diesel, e5, e10)
-// Important: Don't set the radius to big, the tankerkoenig.de endpoint will deliver all stations in the radius which is set,
-// so it will take a long time to fetch data.
+// fuelType (DIE, SUP, GAS)
+
 
 let fuelType
 let widgetInput = args.widgetParameter;
