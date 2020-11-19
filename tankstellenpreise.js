@@ -1,4 +1,4 @@
-// Version 1.1.3
+// Version 1.1.4
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 // Usage:
@@ -9,10 +9,11 @@
 // Important: Don't set the radius to big, the tankerkoenig.de endpoint will deliver all stations in the radius which is set,
 // but only one is needed to display, so it will take a long time to fetch data.
 
-let apiKey, radius, fixedLocation, latitude, longitude, myLocation
+let apiKey, radius, fixedLocation, latitude, longitude, myLocation, brand
 let widgetInput = args.widgetParameter;
+
 if (widgetInput !== null) {
-  [apiKey, radius, fixedLocation, latitude, longitude] = widgetInput.toString().split("|");
+  [apiKey, radius, fixedLocation, latitude, longitude, brand] = widgetInput.split("|");
 
   if (!apiKey || !radius || !fixedLocation) {
     throw new Error("Invalid parameter. Expected format: apiKey|radius (1-20)|fixedLocation (0 or 1)")
@@ -25,6 +26,9 @@ if (widgetInput !== null) {
   radius = parseInt(radius)
   fixedLocation = parseInt(fixedLocation)
 
+  if (!brand) {
+    brand = false
+  }
   if (fixedLocation == 0) {
     myLocation = {
       latitude: 0,
@@ -47,7 +51,7 @@ const textColor = Color.dynamic(new Color('000000'), new Color('EDEDED'));
 const apiURL = (location, radius, apiKey) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=${radius}&sort=dist&type=all&apikey=${apiKey}`
 
 let station = await loadStation(apiKey, radius, fixedLocation, myLocation)
-let widget = await createWidget(station)
+let widget = await createWidget(station, brand)
 
 if (!config.runsInWidget) {
   await widget.presentSmall()
@@ -79,7 +83,7 @@ function formatValue(value) {
   return price + lastDigit + "€"
 }
 
-async function createWidget(data) {
+async function createWidget(data, brand) {
 
   const list = new ListWidget()
   list.setPadding(0, 4, 1, 4)
@@ -99,7 +103,16 @@ async function createWidget(data) {
     return list
   }
 
-  const attr = data.stations[0]
+  const stations = data.stations;
+  let selectedStations
+
+  if (brand) {
+    selectedStations = stations.filter(stations => stations['brand'].toLowerCase() === brand.toLowerCase());
+  } else {
+    selectedStations = stations
+  }
+
+  const attr = selectedStations[0]
 
   let open = '🔴'
   if (attr.isOpen) {
