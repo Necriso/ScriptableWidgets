@@ -17,6 +17,8 @@ Get more widgets at www.scriptables.net
 
 Configure the widget via widget parameters.
 
+**Standarde**
+
 On Homescreen, long tap on widget -> edit widget -> Parameter
 
 Add your credentials as follow:
@@ -24,11 +26,14 @@ Add your credentials as follow:
 
 Example: `my-api-key|1|0`
 
+**Fixed location**
 
 If you want a fixed location change the configuration to this:
 `API-Key|Radius|fixedLocation|latitude|longitude`
 
 Example: `my-api-key|1|1|54.322|10.1355`
+
+**Specify favorite station brand**
 
 If you want to display only a specific station in choosen radius change the configuration to this:
 `API-Key|Radius|fixedLocation|latitude|longitude|brand`
@@ -36,6 +41,12 @@ If you want to display only a specific station in choosen radius change the conf
 Example: `my-api-key|1|0|0|0|aral`
 or
 Example: `my-api-key|1|0|0|0|shell`
+
+It can be that you need to set a greater radius e.g. 2 or 3 to find a station.
+
+**Warning**
+
+Tankerkoenig.de blocks your IP for rest of the day if API is used excessive.
 
 Configuration example:
 
