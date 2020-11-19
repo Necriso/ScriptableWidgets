@@ -30,6 +30,13 @@ If you want a fixed location change the configuration to this:
 
 Example: `my-api-key|1|1|54.322|10.1355`
 
+If you want to display only a specific station in choosen radius change the configuration to this:
+`API-Key|Radius|fixedLocation|latitude|longitude|brand`
+
+Example: `my-api-key|1|0|0|0|aral`
+or
+Example: `my-api-key|1|0|0|0|shell`
+
 Configuration example:
 
 <img  height="200px" src="https://raw.githubusercontent.com/Necriso/ScriptableWidgets/main/images/tankstellenpreise-config.png"  />
