@@ -17,7 +17,7 @@ Get more widgets at www.scriptables.net
 
 Configure the widget via widget parameters.
 
-**Standarde**
+**Standard use**
 
 On Homescreen, long tap on widget -> edit widget -> Parameter
 
