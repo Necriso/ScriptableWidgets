@@ -1,9 +1,9 @@
-// Version 1.0.0
+// Version 1.0.1
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 // Usage:
 // Add credentials toyour widget parameters: 
-// API-Key|radius in km|oilType (diesel, e5, e10)
+// API-Key|radius in km|fuelType (diesel, e5, e10)
 // Important: Don't set the radius to big, the tankerkoenig.de endpoint will deliver all stations in the radius which is set,
 // so it will take a long time to fetch data.
 
@@ -14,18 +14,18 @@ if (widgetInput !== null) {
     [apiKey, radius, oilType] = widgetInput.toString().split("|");
 
     if (!apiKey || !radius || !oilType) {
-        throw new Error("Invalid parameter. Expected format: apiKey|radius (1-20)|oilType (diesel, e5, e10)")
+        throw new Error("Invalid parameter. Expected format: apiKey|radius (1-20)|fuelType (diesel, e5, e10)")
     }
     // Set strings to correct types
     radius = parseInt(radius)
 
 } else {
-    throw new Error("No Widget paramter set. Expected format: apiKey|radius (1-20)|fixedLocation (0 or 1)")
+    throw new Error("No Widget paramter set. Expected format: apiKey|radius (1-20)|fuelType (diesel, e5, e10)")
 }
 
-const backColor = Color.dynamic(new Color('FFFFFF'), new Color('111111'));
-const backColor2 = Color.dynamic(new Color('EEEEEE'), new Color('222222'));
-const textColor = Color.dynamic(new Color('000000'), new Color('EDEDED'));
+const backColor = Color.dynamic(new Color('FFFFFF'), new Color('111111'))
+const backColor2 = Color.dynamic(new Color('EEEEEE'), new Color('222222'))
+const textColor = Color.dynamic(new Color('000000'), new Color('EDEDED'))
 const greyTextColor = Color.dynamic(new Color('000000'), new Color('BBBBBB'))
 
 const apiURL = (location, radius, apiKey) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=${radius}&sort=dist&type=all&apikey=${apiKey}`
@@ -41,13 +41,8 @@ Script.setWidget(widget)
 Script.complete()
 
 async function loadStation(apiKey, radius) {
-    let location
-
-    if (fixedLocation) {
-        location = myLocation
-    } else {
-        location = await Location.current()
-    }
+    
+    let location = await Location.current()
 
     const data = await new Request(apiURL(location, radius, apiKey)).loadJSON()
 
