@@ -1,4 +1,4 @@
-// Version 2.0.2b
+// Version 2.0.3b
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 
@@ -130,6 +130,9 @@ let config = await loadConfig()
 }
 
 function formatValue(value) {
+    if (!value) {
+        return '-'
+    }
     let lastDigit = '⁹'
     let price = value.toString().slice(0, -1)
     return price + lastDigit + "€"
