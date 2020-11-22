@@ -1,4 +1,4 @@
-// Version 1.1.4
+// Version 1.1.5
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 // Usage:
@@ -78,6 +78,9 @@ async function loadStation(apiKey, radius, fixedLocation, myLocation) {
 }
 
 function formatValue(value) {
+  if (!value) {
+    return '-'
+  }
   let lastDigit = '⁹'
   let price = value.toString().slice(0, -1)
   return price + lastDigit + "€"
