@@ -1,4 +1,4 @@
-// Version 1.1
+// Version 1.1.1
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
 // Script by Emre Eromay
@@ -81,7 +81,8 @@ function createList(data) {
 
 async function createWidget(data) {
     let list = createList(data);
-    
+    list.refreshAfterDate = new Date(Date.now() + 300000);
+
     const attr = data.stations.filter(station => station.isOpen == true)
 
     for (let i = 0; i < 3; i++) {
