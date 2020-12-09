@@ -1,6 +1,7 @@
-// Version 1.0.1
+// Version 1.1
 // Check www.scriptables.net for more widgets
 // Use www.scriptdu.de to keep the widget up-to-date
+// Script by Emre Eromay
 // Usage:
 // Add credentials toyour widget parameters: 
 // API-Key|radius in km|fuelType (diesel, e5, e10)
@@ -28,10 +29,10 @@ const backColor2 = Color.dynamic(new Color('EEEEEE'), new Color('222222'))
 const textColor = Color.dynamic(new Color('000000'), new Color('EDEDED'))
 const greyTextColor = Color.dynamic(new Color('000000'), new Color('BBBBBB'))
 
-const apiURL = (location, radius, apiKey) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=${radius}&sort=dist&type=all&apikey=${apiKey}`
+const apiURL = (location, radius, apiKey, oilType) => `https://creativecommons.tankerkoenig.de/json/list.php?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}&rad=${radius}&sort=price&type=${oilType}&apikey=${apiKey}`
 
-let station = await loadStation(apiKey, radius)
-let widget = await createWidget(station, oilType)
+let station = await loadStation(apiKey, radius, oilType)
+let widget = await createWidget(station)
 
 if (!config.runsInWidget) {
     await widget.presentSmall()
@@ -40,11 +41,11 @@ if (!config.runsInWidget) {
 Script.setWidget(widget)
 Script.complete()
 
-async function loadStation(apiKey, radius) {
+async function loadStation(apiKey, radius, oilType) {
     
     let location = await Location.current()
 
-    const data = await new Request(apiURL(location, radius, apiKey)).loadJSON()
+    const data = await new Request(apiURL(location, radius, apiKey, oilType)).loadJSON()
 
     if (data.stations.length === 0) {
         return { error: 1 }
@@ -78,19 +79,15 @@ function createList(data) {
     return list
 }
 
-async function createWidget(data, oilType) {
+async function createWidget(data) {
     let list = createList(data);
-    const stations = data.stations;
-    const attr = stations.filter(stations => stations[oilType] !== null && stations.isOpen === true);
-
-    attr.sort(function (a, b) {
-        return a[oilType] > b[oilType];
-    });
+    
+    const attr = data.stations.filter(station => station.isOpen == true)
 
     for (let i = 0; i < 3; i++) {
         if (attr[i]) {
             if (i === 0) {
-                let stationPrice = list.addText(formatValue(attr[i][oilType]))
+                let stationPrice = list.addText(formatValue(attr[i].price))
                 stationPrice.font = new Font('Menlo', 25)
                 stationPrice.centerAlignText()
                 stationPrice.textColor = textColor
@@ -108,7 +105,7 @@ async function createWidget(data, oilType) {
                 list.addSpacer(7)
             } else if (i === 1) {
                 let stationStack1 = list.addStack()
-                let price1 = stationStack1.addText(formatValue(attr[i][oilType]))
+                let price1 = stationStack1.addText(formatValue(attr[i].price))
                 price1.font = new Font('Menlo', 10)
                 price1.textColor = greyTextColor
 
@@ -127,7 +124,7 @@ async function createWidget(data, oilType) {
                 list.addSpacer(2)
             } else if (i === 2) {
                 let stationStack2 = list.addStack()
-                let price2 = stationStack2.addText(formatValue(attr[i][oilType]))
+                let price2 = stationStack2.addText(formatValue(attr[i].price))
                 price2.font = new Font('Menlo', 10)
                 price2.textColor = greyTextColor
 
@@ -146,6 +143,5 @@ async function createWidget(data, oilType) {
             }
         }
     }
-
     return list
 }
