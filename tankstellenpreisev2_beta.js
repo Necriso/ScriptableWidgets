@@ -185,7 +185,7 @@ async function createWidget(data) {
     let e5Stack = list.addStack()
     let e5Label = e5Stack.addText("Benzin E5:")
     e5Label.font = Font.boldSystemFont(12)
-    e5label.textColor = Color.white()
+    e5Label.textColor = Color.white()
     
     e5Stack.addSpacer()
     let e5Price = e5Stack.addText(formatValue(attr.e5))
